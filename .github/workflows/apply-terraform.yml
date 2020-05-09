@@ -32,6 +32,12 @@ jobs:
           export ARM_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}
           export ARM_TENANT_ID=bouvetasa.onmicrosoft.com
 
+      - name: 'Verify'
+        run: |
+          echo $ARM_SUBSCRIPTION_ID
+          echo $ARM_TENANT_ID
+          echo "hey"
+
       - name: 'Terraform Setup'
         uses: hashicorp/setup-terraform@v1
 
