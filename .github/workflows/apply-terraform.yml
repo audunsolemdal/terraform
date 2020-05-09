@@ -9,11 +9,12 @@ jobs:
     name: 'Terraform'
     runs-on: ubuntu-latest
     env:
-      ARM_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}
-      ARM_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}
-      ARM_SUBSCRIPTION_ID=69fa2b01-430e-405c-a55d-1b6dcb7ae43b
-      ARM_TENANT_ID==${{ secrets.AZURE_TENANT_ID }}
+      ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID: 69fa2b01-430e-405c-a55d-1b6dcb7ae43b
+      ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
 
+    steps:
       - name: 'Checkout'
         uses: actions/checkout@v2
 
