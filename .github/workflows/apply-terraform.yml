@@ -11,11 +11,11 @@ jobs:
 
     steps:
 
-      - name: "Az login"
-        uses: azure/login@v1
+      - name: Azure SP login
+        uses: azure/CLI@v1
         with:
-        # Paste output of `az ad sp create-for-rbac --name terraform --role "Owner" --sdk-auth` as value of secret variable: AZURE_CREDENTIALS, add to Repo settings --> secrets
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          inlineScript: |
+            az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
       - name: 'Checkout'
         uses: actions/checkout@v2
 
