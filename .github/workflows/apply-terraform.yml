@@ -23,11 +23,14 @@ jobs:
       - name: 'whereamI'
         run: |
           pwd && ls
+          git update-index --chmod +x ./auth.sh
 
       - name: 'Set required env variables'
         run: |
-          chmod +x /home/runner/work/terraform/terraform/auth.sh
-          /home/runner/work/terraform/terraform/auth.sh > dev/null
+          export ARM_SUBSCRIPTION_ID=69fa2b01-430e-405c-a55d-1b6dcb7ae43b
+          export ARM_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}
+          export ARM_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}
+          export ARM_TENANT_ID=bouvetasa.onmicrosoft.com
 
       - name: 'Terraform Setup'
         uses: hashicorp/setup-terraform@v1
