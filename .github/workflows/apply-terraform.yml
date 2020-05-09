@@ -34,6 +34,14 @@ jobs:
             export ARM_SUBSCRIPTION_ID=$(az account show --query id | xargs)
             export ARM_TENANT_ID=$(az account show --query tenantId | xargs)
 
+      - name: Set ENV variables
+        env:
+          inlineScript: |
+            ARM_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}
+            ARM_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}
+            ARM_SUBSCRIPTION_ID=69fa2b01-430e-405c-a55d-1b6dcb7ae43b
+            ARM_TENANT_ID==${{ secrets.AZURE_TENANT_ID }}
+
       - name: 'Verify'
         run: |
           echo $ARM_SUBSCRIPTION_ID
