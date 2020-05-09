@@ -26,8 +26,8 @@ jobs:
 
       - name: 'Set required env variables'
         run: |
-          chmod +x ./auth.sh
-          ./auth.sh > dev/null
+          chmod +x /home/runner/work/terraform/terraform/auth.sh
+          /home/runner/work/terraform/terraform/auth.sh > dev/null
 
       - name: 'Terraform Setup'
         uses: hashicorp/setup-terraform@v1
