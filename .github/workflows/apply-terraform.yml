@@ -24,6 +24,9 @@ jobs:
       - name: 'Terraform Init'
         run: terraform init
 
+      - name: 'Terraform select workspace'
+        run: terraform workspace select prod
+
       - name: 'Terraform Plan'
         id: plan
         run: terraform plan
