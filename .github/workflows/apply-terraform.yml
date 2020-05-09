@@ -25,8 +25,13 @@ jobs:
         run: terraform init
 
       - name: 'Terraform Plan'
+        id: plan
         run: terraform plan
 
       - run: echo ${{ steps.plan.outputs.stdout }}
       - run: echo ${{ steps.plan.outputs.stderr }}
       - run: echo ${{ steps.plan.outputs.exitcode }}
+
+      - name: Terraform Apply
+        if: github.ref == 'refs/heads/master' && github.event_name == 'push'
+        run: terraform apply -auto-approve
