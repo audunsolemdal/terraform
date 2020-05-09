@@ -17,6 +17,13 @@ resource "azurerm_resource_group" "rg" {
         location = "norwayeast"
 }
 
+resource "azurerm_management_lock" "resource-group-level" {
+  name       = "resource-group-level"
+  scope      = azurerm_resource_group.rg.id
+  lock_level = "CanNotDelete"
+  notes      = "Ensure resources in this RG cannot be deleted"
+}
+
 resource "azurerm_storage_account" "storageaccount" {
   name                     = "sdpterraform"
   resource_group_name      = azurerm_resource_group.rg.name
