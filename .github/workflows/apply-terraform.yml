@@ -20,6 +20,10 @@ jobs:
       - name: 'Checkout'
         uses: actions/checkout@v2
 
+      - name: 'whereamI'
+        run: |
+          pwd && ls
+
       - name: 'Set required env variables'
         run: |
           chmod +x ./auth.sh
