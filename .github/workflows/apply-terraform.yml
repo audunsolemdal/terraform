@@ -8,15 +8,12 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
+    env:
+      ARM_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}
+      ARM_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}
+      ARM_SUBSCRIPTION_ID=69fa2b01-430e-405c-a55d-1b6dcb7ae43b
+      ARM_TENANT_ID==${{ secrets.AZURE_TENANT_ID }}
 
-    steps:
-
-      - name: Azure SP login
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
-      
       - name: 'Checkout'
         uses: actions/checkout@v2
 
@@ -24,24 +21,6 @@ jobs:
         run: |
           pwd && ls
           git update-index --chmod +x ./auth.sh
-
-      - name: Set ENV variables
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            export ARM_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}
-            export ARM_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}
-            export ARM_SUBSCRIPTION_ID=$(az account show --query id | xargs)
-            export ARM_TENANT_ID=$(az account show --query tenantId | xargs)
-
-      - name: Set ENV variables
-        run: echo $ARM_SUBSCRIPTION_ID $ARM_TENANT_ID
-        env:
-          inlineScript: |
-            ARM_CLIENT_ID=${{ secrets.AZURE_CLIENT_ID }}
-            ARM_CLIENT_SECRET=${{ secrets.AZURE_CLIENT_SECRET }}
-            ARM_SUBSCRIPTION_ID=69fa2b01-430e-405c-a55d-1b6dcb7ae43b
-            ARM_TENANT_ID==${{ secrets.AZURE_TENANT_ID }}
 
       - name: 'Verify'
         run: |
@@ -64,9 +43,3 @@ jobs:
       - run: echo ${{ steps.plan.outputs.stdout }}
       - run: echo ${{ steps.plan.outputs.stderr }}
       - run: echo ${{ steps.plan.outputs.exitcode }}
-
-      - name: Azure logout
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az logout
